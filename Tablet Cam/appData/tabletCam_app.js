@@ -88,7 +88,7 @@
             secondaryCameraConfig.farClipPlaneDistance = FAR_CLIP_DISTANCE;
             secondaryCameraConfig.vFoV = vFoV;
     
-            var toneMappingCurve = HMD.active ? 0 : 1;
+            var toneMappingCurve = !!HMD.tabletID ? 0 : 1;
             Render.getConfig("SecondaryCameraJob.ToneMapping").curve = toneMappingCurve;
     
             secondaryCameraConfig.attachedEntityId = tabletCamAvatarEntity;
@@ -112,7 +112,7 @@
 
     var frontCamInUse = Settings.getValue("tabletCam/frontCamInUse", true);
     function switchCams(forceFrontCamValue) {
-        if (!tabletCamAvatarEntity || (HMD.active && !tabletCamLocalEntity)) {
+        if (!tabletCamAvatarEntity || (!!HMD.tabletID && !tabletCamLocalEntity)) {
             console.log("User tried to switch cams, but TabletCam wasn't ready!");
             return;
         }
@@ -122,13 +122,8 @@
 
         var newTabletCamAvatarEntityProps = getDynamicTabletCamAvatarEntityProperties();
         Entities.editEntity(tabletCamAvatarEntity, newTabletCamAvatarEntityProps);
-        Entities.editEntity(tabletCamLocalEntity, {
-            "dimensions": {
-                "x": frontCamInUse ? tabletCamLocalEntityDim.x : -tabletCamLocalEntityDim.x,
-                "y": tabletCamLocalEntityDim.y,
-                "z": 0
-            }
-        });
+
+        updateTabletCamLocalEntity();
     }
     
     function disableTabletCam() {
@@ -160,39 +155,49 @@
 
         deleteTabletCamAvatarEntity();
 
-        if (tabletCamLocalEntity) {
-            Entities.deleteEntity(tabletCamLocalEntity);
-        }
-        tabletCamLocalEntity = false;
-
         tabletCamRunning = false;
     }
 
     var tabletCamLocalEntityWidth = 0.292;
     var tabletCamLocalEntityHeight = 0.292;
-    var tabletCamLocalEntityDim = { x: tabletCamLocalEntityWidth, y: -tabletCamLocalEntityHeight };
+    var tabletCamLocalEntityDim = { x: tabletCamLocalEntityWidth, y: tabletCamLocalEntityHeight };
     var tabletCamLocalEntity = false;
+    var LOCAL_ENTITY_STATIC_PROPERTIES = {
+        type: "Image",
+        imageURL: "resource://spectatorCameraFrame",
+        emissive: true,
+        grab: {
+            "grabbable": false
+        },
+        alpha: 1,
+        triggerable: false
+    };
     function updateTabletCamLocalEntity() {
-        if (!HMD.active) {
+        if (!HMD.tabletID) {
             return;
         }
 
         if (tabletCamLocalEntity) {
             Entities.deleteEntity(tabletCamLocalEntity);
+            tabletCamLocalEntity = false;
         }
-        tabletCamLocalEntity = Entities.addEntity({
-            type: "Image",
-            imageURL: "resource://spectatorCameraFrame",
-            emissive: true,
-            parentID: HMD.tabletID,
-            alpha: 1,
-            localRotation: { w: 1, x: 0, y: 0, z: 0 },
-            localPosition: { x: 0, y: 0.0225, z: -0.01 },
-            dimensions: tabletCamLocalEntityDim,
-            grab: {
-                "grabbable": false
+        var props = LOCAL_ENTITY_STATIC_PROPERTIES;
+        props.dimensions = tabletCamLocalEntityDim;
+        if (!!HMD.tabletID) {
+            props.parentID = HMD.tabletID;
+            props.localPosition = [0, 0.0225, -0.02];
+            if (frontCamInUse) {
+                props.localRotation = Quat.fromVec3Degrees([0, 180, 180]);
+            } else {
+                props.localRotation = Quat.fromVec3Degrees([0, 0, 180]);
             }
-        }, "local");
+        } else {
+            props.parentID = Uuid.NULL;
+            props.localPosition = inFrontOf(0.5);
+            props.localRotation = MyAvatar.orientation;
+        }
+
+        tabletCamLocalEntity = Entities.addEntity(props, "local");
     }
 
     function onDomainChanged() {
@@ -298,7 +303,7 @@
             shortSideTargetResolution = 4320;
         }
 
-        if (tallOrientation || HMD.active) {
+        if (tallOrientation && !HMD.active) {
             secondaryCameraResolutionWidth = shortSideTargetResolution;
             secondaryCameraResolutionHeight = secondaryCameraResolutionWidth / aspectRatio;
 
@@ -383,13 +388,6 @@
             Settings.setValue("tabletCam/detached", detached);
             var newTabletCamAvatarEntityProps = getDynamicTabletCamAvatarEntityProperties();
             Entities.editEntity(tabletCamAvatarEntity, newTabletCamAvatarEntityProps);
-            Entities.editEntity(tabletCamLocalEntity, {
-                "dimensions": {
-                    "x": frontCamInUse ? tabletCamLocalEntityDim.x : -tabletCamLocalEntityDim.x,
-                    "y": tabletCamLocalEntityDim.y,
-                    "z": 0
-                }
-            });
             break;
         default:
             print('Unrecognized message from TabletCam.qml.');
@@ -462,9 +460,7 @@
         }
         Settings.setValue("tabletCam/cameraRollPaths", JSON.stringify(cameraRollPaths));
 
-        if (!HMD.active) {
-            Render.getConfig("SecondaryCameraJob.ToneMapping").curve = 1;
-        }
+        Render.getConfig("SecondaryCameraJob.ToneMapping").curve = (!!HMD.tabletID ? 0 : 1);
 
         secondaryCameraConfig.resetSizeSpectatorCamera(secondaryCameraResolutionPreviewWidth, secondaryCameraResolutionPreviewHeight);
         ui.sendMessage({
@@ -493,9 +489,12 @@
                         Vec3.multiply(distance, Quat.getForward(orientation || MyAvatar.orientation)));
     }
 
-    var detached = Settings.getValue("tabletCam/detached", false);
+    var detached = false;
+    Settings.setValue("tabletCam/detached", detached);
     function getDynamicTabletCamAvatarEntityProperties() {
-        var dynamicProps = {};
+        var dynamicProps = {
+            dimensions: [0.2, 0.2, 0.2]
+        };
 
         if (detached) {
             dynamicProps.collisionless = false;
@@ -518,10 +517,14 @@
             dynamicProps.visible = true;
             dynamicProps.parentID = Uuid.NULL;
             dynamicProps.parentJointIndex = 65535;
-            console.log("HERE!", tabletCamAvatarEntity);
+            dynamicProps.triggerable = true;
             if (tabletCamAvatarEntity) {
                 var currentProps = Entities.getEntityProperties(tabletCamAvatarEntity, ["position", "rotation"]);
-                dynamicProps.position = currentProps.position;
+                if (!!HMD.tabletID) {
+                    dynamicProps.position = inFrontOf(0.2, currentProps.position, currentProps.rotation);
+                } else {
+                    dynamicProps.position = currentProps.position;
+                }
                 dynamicProps.rotation = currentProps.rotation;
             } else {
                 dynamicProps.position = inFrontOf(0.5);
@@ -530,6 +533,7 @@
             dynamicProps.velocity = [0, 0, 0];
             dynamicProps.angularVelocity = [0, 0, 0];
         } else {
+            dynamicProps.triggerable = false;
             dynamicProps.collisionless = true;
             dynamicProps.ignoreForCollisions = true;
             dynamicProps.grab = {
@@ -537,9 +541,10 @@
             };
             dynamicProps.visible = false;
 
-            if (HMD.active) {
+            if (!!HMD.tabletID) {
                 dynamicProps.parentID = HMD.tabletID;
                 dynamicProps.parentJointIndex = 65535;
+                dynamicProps.dimensions = [0.01, 0.01, 0.01];
             } else {
                 var cameraMode = Camera.mode;
                 // If:
@@ -556,8 +561,8 @@
     
             dynamicProps.localPosition = {
                 "x": 0,
-                "y": HMD.active ? 0.18 : (frontCamInUse ? -0.18 : (Camera.mode !== "first person" ? 0 : -0.02)),
-                "z": HMD.active ? -0.02 : (frontCamInUse ? 1 : (Camera.mode !== "first person" ? 0 : 0.05))
+                "y": !!HMD.tabletID ? 0.215 : (frontCamInUse ? -0.18 : (Camera.mode !== "first person" ? 0 : -0.02)),
+                "z": !!HMD.tabletID ? (frontCamInUse ? -0.02 : 0.1) : (frontCamInUse ? 1 : (Camera.mode !== "first person" ? 0 : 0.05))
             },
             dynamicProps.localRotation = {
                 "x": 0,
@@ -580,6 +585,11 @@
     function onClosed() {
         if (!detached) {
             disableTabletCam();
+        }
+
+        if (tabletCamLocalEntity) {
+            Entities.deleteEntity(tabletCamLocalEntity);
+            tabletCamLocalEntity = false;
         }
     }
 

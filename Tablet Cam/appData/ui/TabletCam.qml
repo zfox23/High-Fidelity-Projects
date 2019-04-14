@@ -110,7 +110,6 @@ Rectangle {
                 checked: root.detached;
                 boxSize: 24;
                 height: 32;
-                width: paintedWidth;
 			    anchors.verticalCenter: parent.verticalCenter;
                 anchors.left: parent.left;
                 anchors.leftMargin: 8;
@@ -197,7 +196,7 @@ Rectangle {
 	    }
         
         Rectangle {
-            visible: !secondaryCameraPreview.visible && !HMD.active;
+            visible: !secondaryCameraPreview.visible && HMD.tabletID !== "{00000000-0000-0000-0000-000000000000}";
             anchors.fill: secondaryCameraPreview;
             color: hifi.colors.white;
         }
@@ -205,7 +204,7 @@ Rectangle {
         // Secondary Camera Preview
         Hifi.ResourceImageItem {
             id: secondaryCameraPreview;
-            visible: !HMD.active;
+            visible: HMD.tabletID !== "{00000000-0000-0000-0000-000000000000}";
             url: "resource://spectatorCameraFrame";
             ready: visible;
             mirrorVertically: true;
@@ -292,7 +291,7 @@ Rectangle {
                         parent.color = "#EA4C5F";
                     }
                     onClicked: {
-                        if (!HMD.active) {
+                        if (HMD.tabletID !== "{00000000-0000-0000-0000-000000000000}") {
                             secondaryCameraPreview.visible = false;
                         }
 			            sendToScript({method: 'takePhoto'});
@@ -843,7 +842,8 @@ Rectangle {
                     text: Settings.getValue("snapshotsDirectory", "<Not Set>");
                     colorScheme: hifi.colorSchemes.dark;
                     // Anchors
-                    anchors.verticalCenter: parent.verticalCenter;
+                    anchors.top: photoDirectoryHeaderText.bottom;
+                    anchors.topMargin: 8;
                     anchors.left: parent.left;
                     anchors.right: parent.right;
                     height: 50;
@@ -890,7 +890,7 @@ Rectangle {
 			Settings.setValue('tabletCam/firstRun', false);
 			helpTextContainer.visible = false;
             galleryButtonImage.source = message.lastStillSnapshotPath;
-            if (!HMD.active) {
+            if (HMD.tabletID !== "{00000000-0000-0000-0000-000000000000}") {
                 secondaryCameraPreview.visible = true;
             }
         break;

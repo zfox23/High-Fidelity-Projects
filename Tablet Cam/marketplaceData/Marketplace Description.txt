@@ -19,9 +19,11 @@ v2.0 (2019-04)
 - In Desktop mode, when using the rear-facing camera and while you're using Third Person Camera, Tablet Cam will now be parented to Interface's Third Person Camera!
 - The camera's viewpoint can now be detached from its default position! Snap a photo from a unique viewpoint.
 - Fixed a bug that caused zoom settings to be saved incorrectly between restarts.
-- Fixed a bug that caused camera preview to show up as a corrupted image in HMD mode.
+- Fixed a bug that caused the camera preview to show up as a corrupted image in HMD mode.
 - Fixed a bug that caused the position of the rear-facing camera to be incorrect in HMD mode.
 - Switched Overlay usage to Local Entities.
+- Now you can use Tablet Cam in Desktop mode while "Desktop Tablet becomes Toolbar" is unchecked - although I'm not sure why you'd want to do that. :)
+- Fixed some QML bugs.
 
 v1.1 (2019-02)
 
