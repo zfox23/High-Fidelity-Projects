@@ -87,8 +87,7 @@
             secondaryCameraConfig.farClipPlaneDistance = FAR_CLIP_DISTANCE;
             secondaryCameraConfig.vFoV = vFoV;
     
-            var toneMappingCurve = !!HMD.tabletID ? 0 : 1;
-            Render.getConfig("SecondaryCameraJob.ToneMapping").curve = toneMappingCurve;
+            Render.getConfig("SecondaryCameraJob.ToneMapping").curve = 1;
     
             secondaryCameraConfig.attachedEntityId = tabletCamAvatarEntity;
             tabletCamRunning = true;
@@ -154,11 +153,16 @@
 
         deleteTabletCamAvatarEntity();
 
+        if (tabletCamLocalEntity) {
+            Entities.deleteEntity(tabletCamLocalEntity);
+            tabletCamLocalEntity = false;
+        }
+
         tabletCamRunning = false;
     }
 
-    var tabletCamLocalEntityWidth = 0.292;
-    var tabletCamLocalEntityHeight = 0.292;
+    var tabletCamLocalEntityWidth = 0.282;
+    var tabletCamLocalEntityHeight = 0.282;
     var tabletCamLocalEntityDim = { x: tabletCamLocalEntityWidth, y: tabletCamLocalEntityHeight };
     var tabletCamLocalEntity = false;
     var LOCAL_ENTITY_STATIC_PROPERTIES = {
@@ -184,7 +188,7 @@
         props.dimensions = tabletCamLocalEntityDim;
         if (!!HMD.tabletID) {
             props.parentID = HMD.tabletID;
-            props.localPosition = [0, 0.0225, -0.02];
+            props.localPosition = [0, 0.0225, -0.008];
             if (frontCamInUse) {
                 props.localRotation = Quat.fromVec3Degrees([0, 180, 180]);
             } else {
@@ -459,7 +463,7 @@
         }
         Settings.setValue("tabletCam/cameraRollPaths", JSON.stringify(cameraRollPaths));
 
-        Render.getConfig("SecondaryCameraJob.ToneMapping").curve = (!!HMD.tabletID ? 0 : 1);
+        Render.getConfig("SecondaryCameraJob.ToneMapping").curve = 1;
 
         secondaryCameraConfig.resetSizeSpectatorCamera(secondaryCameraResolutionPreviewWidth, secondaryCameraResolutionPreviewHeight);
         ui.sendMessage({
