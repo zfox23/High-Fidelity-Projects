@@ -3,10 +3,9 @@
 /*global Tablet, Script,  */
 /* eslint indent: ["error", 4, { "outerIIFEBody": 1 }] */
 //
-// tabletCam.js
+// tabletCam_app.js
 //
-// Created by Zach Fox on 2018-12-07
-// Copyright 2018 High Fidelity, Inc
+// Created by Zach Fox on 2019-04-14
 //
 // Distributed under the Apache License, Version 2.0
 // See the accompanying file LICENSE or http://www.apache.org/licenses/LICENSE-2.0.html

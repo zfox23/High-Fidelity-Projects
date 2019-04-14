@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Eye Look</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="css/eyeLook_ui.css?0">
+        <script type="text/javascript" src="js/eyeLook_ui.js?0"></script>
+    </head>
+    <body>
+        <div id="loadingContainer">
+        </div>
+
+        <div id="titleBarContainer">
+            <div id="titleText" style="font-weight:bold;">
+                Eye Look
+            </div>
+        </div>
+
+        <div id="controllersContainer">
+            <div class="positionContainer" id="leftEyeController">
+                <div class="position" id="leftEyePosition">
+                </div>
+            </div>
+
+            <div class="positionContainer" id="rightEyeController">
+                <div class="position" id="rightEyePosition">
+                </div>
+            </div>
+        </div>
+
+        <div id="combineContainer">
+            <input type="checkbox" id="combineCheckbox" onclick="combineCheckboxClicked(this);">
+            <label for="combineCheckbox">Combine Eye Controls</label>
+        </div>
+    </body>
+</html>

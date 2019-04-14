@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    color: #cccbcb;
+    background: linear-gradient(#2b2b2b, #303030);
+}
+
+#loadingContainer {
+    background-color: rgba(0, 0, 0, 0.8);
+    background-image: url('../images/loadingSpinner.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 999;
+}
+
+#titleBarContainer {
+    display: flex;
+    align-items: center;
+    height: 54px;
+    padding: 0 12px;
+    font-size: 24px;
+    background-color: #121212;
+    color: #ffffff;
+    justify-content: space-between;
+}
+
+#controllersContainer {
+    padding: 12px 4px;
+    width: calc(100vw - 8px);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.positionContainer {
+    width: 200px;
+    height: 200px;
+    background-color: #000;
+}
+
+.position {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: yellow;
+    position: relative;
+    top: calc(100px - 10px);
+    left: calc(100px - 10px);
+    cursor: move;
+    touch-action: none;
+    user-select: none;
+}
+
+#combineContainer {
+    font-size: 24px;
+    margin: 0 16px;
+    touch-action: none;
+    user-select: none;
+}
