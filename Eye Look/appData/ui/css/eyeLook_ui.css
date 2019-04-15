@@ -62,3 +62,38 @@ body {
     touch-action: none;
     user-select: none;
 }
+
+#presetsContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    align-content: flex-start;
+    margin: 12px;
+    flex-wrap: wrap;
+}
+
+input[type=button] {
+    font-family: 'Raleway';
+    font-weight: bold;
+    font-size: 20px;
+    vertical-align: top;
+    min-height: 40px;
+    padding: 0px 18px;
+    margin: 4px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: #000;
+    background: linear-gradient(#2e3e8f 20%, #172983 100%);
+    cursor: pointer;
+}
+input[type=button]:enabled:hover {
+    background: linear-gradient(#009ee0 20%, #006e9c 100%);
+    border: none;
+}
+input[type=button]:active {
+    background: linear-gradient(#009ee0 20%, #009ee0 100%);
+}
+input[type=button][pressed=pressed] {
+    color: #009ee0;
+}

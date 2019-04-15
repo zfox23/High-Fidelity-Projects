@@ -67,6 +67,13 @@
     }
 
 
+    function setJointRotations() {
+        for (var i = 0; i < jointInfo.length; i++) {
+            MyAvatar.setJointRotation(jointInfo[i].jointIndex, jointInfo[i].customRotation);
+        }
+    }
+
+
     var MIN_X_ROT_DEG = -40;
     var MAX_X_ROT_DEG = 40;
     var MIN_Y_ROT_DEG = -40;
@@ -80,7 +87,7 @@
         var eyeXRotationDegrees = linearScale(yPosFraction, 0, 1, MIN_Y_ROT_DEG, MAX_Y_ROT_DEG);
         var eyeYRotationDegrees = -linearScale(xPosFraction, 0, 1, MIN_X_ROT_DEG, MAX_X_ROT_DEG);
 
-        if (combined) {
+        if (combined || eye === "both") {
             jointInfo.forEach(function(element) {
                 element.customRotation = Quat.fromVec3Degrees({
                     "x": eyeXRotationDegrees,
@@ -96,9 +103,7 @@
             });
         }        
 
-        for (var i = 0; i < jointInfo.length; i++) {
-            MyAvatar.setJointRotation(jointInfo[i].jointIndex, jointInfo[i].customRotation);
-        }
+        setJointRotations();
     }
 
     var combined = false;
@@ -108,9 +113,7 @@
         if (combined) {
             jointInfo[1].customRotation = jointInfo[0].customRotation;
             
-            for (var i = 0; i < jointInfo.length; i++) {
-                MyAvatar.setJointRotation(jointInfo[i].jointIndex, jointInfo[i].customRotation);
-            }
+            setJointRotations();
         }
     }
 
@@ -128,6 +131,12 @@
 
 
             case "updateEyePosition":
+                updateEyePosition(event.data);
+                break;
+
+
+            case "presetButtonClicked":
+                combined = false;
                 updateEyePosition(event.data);
                 break;
 
