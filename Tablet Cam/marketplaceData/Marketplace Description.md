@@ -1,5 +1,7 @@
 The Tablet Cam app allows you to **easily take selfies and regular photos in High Fidelity** using your Tablet or hand controllers!
 
+This is the fully-featured PRO version of Tablet Cam. A free version with fewer features is coming soon.
+
 ### Features
 
 - **Front-facing and rear-facing** cameras and flashes with optional **custom positioning**
@@ -23,7 +25,7 @@ v2.0 (2019-04)
 - Fixed a bug that caused the position of the rear-facing camera to be incorrect in HMD mode.
 - Switched Overlay usage to Local Entities.
 - Now you can use Tablet Cam in Desktop mode while "Desktop Tablet becomes Toolbar" is unchecked - although I'm not sure why you'd want to do that. :)
-- Fixed some QML bugs.
+- Fixed some interface bugs.
 
 v1.1 (2019-02)
 
