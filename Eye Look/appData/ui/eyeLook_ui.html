@@ -17,21 +17,30 @@
             </div>
         </div>
 
-        <div id="controllersContainer">
-            <div class="positionContainer" id="leftEyeController">
-                <div class="position" id="leftEyePosition">
+        <div id="manualControlContainer">
+            <div id="controllersContainer">
+                <div class="positionContainer" id="leftEyeController">
+                    <div class="position" id="leftEyePosition">
+                    </div>
+                </div>
+
+                <div class="positionContainer" id="rightEyeController">
+                    <div class="position" id="rightEyePosition">
+                    </div>
                 </div>
             </div>
 
-            <div class="positionContainer" id="rightEyeController">
-                <div class="position" id="rightEyePosition">
-                </div>
+            <div id="combineContainer">
+                <input type="checkbox" id="combineCheckbox" onclick="combineCheckboxClicked(this);">
+                <label for="combineCheckbox">Combine Eye Controls</label>
             </div>
         </div>
 
-        <div id="combineContainer">
-            <input type="checkbox" id="combineCheckbox" onclick="combineCheckboxClicked(this);">
-            <label for="combineCheckbox">Combine Eye Controls</label>
+        <div id="presetsContainer">
+            <input id="eyerollPreset" type="button" value="Eyeroll 🙄" onclick="presetButtonClicked(this);">
+            <input id="crosseyedPreset" type="button" value="Crosseyed" onclick="presetButtonClicked(this);">
+            <input id="worgPreset" type="button" value="Worg" onclick="presetButtonClicked(this);">
+            <input id="unrealisticPreset" type="button" value="Unrealistic" onclick="presetButtonClicked(this);">
         </div>
     </body>
 </html>

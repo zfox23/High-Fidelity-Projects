@@ -21,6 +21,12 @@ function emitAppSpecificEvent(method, data) {
 }
 
 
+var currentX = {};
+var currentY = {};
+var initialX = {};
+var initialY = {};
+var xOffset = {};
+var yOffset = {};
 function setupDragging() {
     var dragElements = [];
     dragElements.push(document.getElementById("leftEyePosition"));
@@ -31,12 +37,6 @@ function setupDragging() {
     containerElements.push(document.getElementById("rightEyeController"));
 
     var activeElement = false;
-    var currentX;
-    var currentY;
-    var initialX;
-    var initialY;
-    var xOffset = 0;
-    var yOffset = 0;
 
     containerElements.forEach(function(element) {
         element.addEventListener("touchstart", dragStart, false);
@@ -49,68 +49,178 @@ function setupDragging() {
     });
 
     function dragStart(e) {
-        if (e.type === "touchstart") {
-            initialX = e.touches[0].clientX - xOffset;
-            initialY = e.touches[0].clientY - yOffset;
-        } else {
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
-        }
-
         if (dragElements.indexOf(e.target) > -1) {
             activeElement = e.target;
+
+            if (e.type === "touchstart") {
+                initialX[activeElement.id] = e.touches[0].clientX - (xOffset[activeElement.id] || 0);
+                initialY[activeElement.id] = e.touches[0].clientY - (yOffset[activeElement.id] || 0);
+            } else {
+                initialX[activeElement.id] = e.clientX - (xOffset[activeElement.id] || 0);
+                initialY[activeElement.id] = e.clientY - (yOffset[activeElement.id] || 0);
+            }
         }
     }
 
     function dragEnd(e) {
-        initialX = currentX;
-        initialY = currentY;
+        initialX[activeElement.id] = currentX[activeElement.id];
+        initialY[activeElement.id] = currentY[activeElement.id];
 
         activeElement = false;
     }
 
     function drag(e) {
         if (activeElement) {
-
             e.preventDefault();
 
             if (e.type === "touchmove") {
-                currentX = e.touches[0].clientX - initialX;
-                currentY = e.touches[0].clientY - initialY;
+                currentX[activeElement.id] = e.touches[0].clientX - initialX[activeElement.id];
+                currentY[activeElement.id] = e.touches[0].clientY - initialY[activeElement.id];
             } else {
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
+                currentX[activeElement.id] = e.clientX - initialX[activeElement.id];
+                currentY[activeElement.id] = e.clientY - initialY[activeElement.id];
             }
 
-            xOffset = currentX;
-            yOffset = currentY;
+            xOffset[activeElement.id] = currentX[activeElement.id];
+            yOffset[activeElement.id] = currentY[activeElement.id];
 
-            setTranslate(currentX, currentY, activeElement);
+            var eye = "left";
+            if (activeElement.id === "rightEyePosition") {
+                eye = "right";
+            }
+
+            setTranslate(currentX[activeElement.id], currentY[activeElement.id], eye, "htmlDrag");
+        }
+    }
+}
+
+    
+// Returns a linearly scaled value based on `factor` and the other inputs
+function linearScale(factor, minInput, maxInput, minOutput, maxOutput) {
+    return minOutput + (maxOutput - minOutput) *
+    (factor - minInput) / (maxInput - minInput);
+}
+
+
+function clamp(input, min, max) {
+    return Math.min(Math.max(input, min), max);
+}
+
+
+function overrideHTMLPositionData(elementID, x, y) {
+    currentX[elementID] = x;
+    initialX[elementID] = x;
+    xOffset[elementID] = x;
+    currentY[elementID] = y;
+    initialY[elementID] = y;
+    yOffset[elementID] = y;
+}
+
+
+var XY_PX_MIN = -100;
+var XY_PX_MAX = 100;
+function setTranslate(xPos, yPos, eye, source) {
+    xPos = clamp(xPos, XY_PX_MIN, XY_PX_MAX);
+    yPos = clamp(yPos, XY_PX_MIN, XY_PX_MAX);
+
+    var elementID = "leftEyePosition";
+    if (eye === "right") {
+        elementID = "rightEyePosition";
+    }
+
+    var el;
+    if (eye !== "both") {
+        el = document.getElementById(elementID);
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+        if (source !== "htmlDrag") {
+            overrideHTMLPositionData(elementID, xPos, yPos);
+        }
+    } else if (eye === "both") {
+        elementID = "leftEyePosition";
+        el = document.getElementById(elementID);
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+        if (source !== "htmlDrag") {
+            overrideHTMLPositionData(elementID, xPos, yPos);
+        }
+        elementID = "rightEyePosition";
+        el = document.getElementById(elementID);
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+        if (source !== "htmlDrag") {
+            overrideHTMLPositionData(elementID, xPos, yPos);
         }
     }
 
-    function clamp(input, min, max) {
-        return Math.min(Math.max(input, min), max);
+    var xPosFraction = linearScale(xPos, XY_PX_MIN, XY_PX_MAX, 0, 1);
+    var yPosFraction = linearScale(yPos, XY_PX_MIN, XY_PX_MAX, 0, 1);
+
+    var method = source === "htmlDrag" ? "updateEyePosition" : "presetButtonClicked";
+    emitAppSpecificEvent(method, {
+        "eye": eye,
+        "xPosFraction": xPosFraction,
+        "yPosFraction": yPosFraction
+    });
+}
+
+
+function presetButtonClicked(el) {
+    var validPreset = true;
+
+    switch (el.id) {
+        case "eyerollPreset":
+            setTranslate(
+                linearScale(0.65, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                linearScale(0.28, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                "both"
+            );
+        break;
+
+
+        case "crosseyedPreset":
+            setTranslate(
+                linearScale(0.72, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                linearScale(0.63, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                "left"
+            );
+            setTranslate(
+                linearScale(0.28, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                linearScale(0.63, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                "right"
+            );
+        break;
+
+
+        case "worgPreset":
+            setTranslate(
+                linearScale(0.5, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                linearScale(0, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                "both"
+            );
+        break;
+
+
+        case "unrealisticPreset":
+            setTranslate(
+                linearScale(0.23, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                linearScale(0.63, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                "left"
+            );
+            setTranslate(
+                linearScale(0.82, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                linearScale(0.38, 0, 1, XY_PX_MIN, XY_PX_MAX),
+                "right"
+            );
+        break;
+
+
+        default:
+            validPreset = false;
+            console.log("Unhandled preset clicked: " + element.id);
+            break;
     }
 
-    var X_PX_MIN = -100;
-    var X_PX_MAX = 100;
-    var Y_PX_MIN = -100;
-    var Y_PX_MAX = 100;
-    function setTranslate(xPos, yPos, el) {
-        xPos = clamp(xPos, X_PX_MIN, X_PX_MAX);
-        yPos = clamp(yPos, Y_PX_MIN, Y_PX_MAX);
-
-        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-
-        var xPosFraction = (xPos - X_PX_MIN) / (X_PX_MAX - X_PX_MIN);
-        var yPosFraction = (yPos - Y_PX_MIN) / (Y_PX_MAX - Y_PX_MIN);
-
-        emitAppSpecificEvent("updateEyePosition", {
-            "eye": el.id === "leftEyePosition" ? "left" : "right",
-            "xPosFraction": xPosFraction,
-            "yPosFraction": yPosFraction
-        });
+    if (validPreset){
+        document.getElementById("combineCheckbox").checked = false;
+        document.getElementById("rightEyeController").style.display = "block";
     }
 }
 
