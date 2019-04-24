@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    color: #cccbcb;
+    background: linear-gradient(#2b2b2b, #303030);
+}
+
+#titleBarContainer {
+    display: flex;
+    align-items: center;
+    height: 54px;
+    padding: 0 12px;
+    font-size: 24px;
+    background-color: #121212;
+    color: #ffffff;
+    justify-content: space-between;
+}
+
+#contentContainer {
+    margin: 16px;
+    font-size: 22px;
+}

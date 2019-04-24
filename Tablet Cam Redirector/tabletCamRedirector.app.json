@@ -1,0 +1,4 @@
+{
+    "scriptURL": "./appData/tabletCamRedirector_app.js",
+    "homeURL": "./appData/ui/tabletCamRedirector_ui.html"
+}
