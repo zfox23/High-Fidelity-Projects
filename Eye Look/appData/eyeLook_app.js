@@ -29,6 +29,8 @@
         MyAvatar.lookAtSnappingEnabled = false;
         MyAvatar.hasProceduralEyeFaceMovement = false;
         MyAvatar.hasProceduralBlinkFaceMovement = false;
+        MyAvatar.hasScriptedBlendshapes = true;
+        MyAvatar.setForceFaceTrackerConnected(true);
     }
 
 
@@ -36,6 +38,8 @@
         MyAvatar.lookAtSnappingEnabled = true;
         MyAvatar.hasProceduralEyeFaceMovement = true;
         MyAvatar.hasProceduralBlinkFaceMovement = true;
+        MyAvatar.hasScriptedBlendshapes = false;
+        MyAvatar.setForceFaceTrackerConnected(false);
 
         MyAvatar.clearJointsData();
 
