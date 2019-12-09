@@ -1,0 +1,70 @@
+Possible Voices:
+Amy
+Emma
+Brian
+Ivy
+Joanna
+Kendra
+Kimberly
+Salli
+Joey
+Justin
+Matthew
+Geraint
+Nicole
+Russell
+Aditi
+Raveena
+
+
+[speaker:Brian] Mr. Wilson, I’d like you to meet Dr. Edward Smith.
+[speaker:Joey] It's nice to meet you, Dr. Smith.
+[speaker:Emma] Pleasure to meet you too.
+[speaker:Brian] Dr. Smith is an economist. She just finished writing a book on international trade.
+[speaker:Joey] Oh? That's my field, too. I work for the United Nations.
+[speaker:Emma] In the development program, by chance?
+[speaker:Joey] Yes, how did you guess?
+[speaker:Emma] I've read your articles on technical assistance. They're excellent.
+[speaker:Joey] Oh, thank you! Well, what was it like writing your book?
+[speaker:Emma] Oh, it was a challenge.
+[speaker:Brian] She says that, but it barely needed any revision.
+[speaker:Emma] You are too kind, Joe.
+
+
+[speaker:Russell] Hello, is this the High Fidelity help desk?
+[speaker:Salli] Why yes it is! How can I help you today, sir?
+[speaker:Russell] Well, you see, I'm looking to use this new-fangled technology to replace my old meeting software.
+[speaker:Salli] Oh? What is your organization using now?
+[speaker:Russell] We're using Google Meet.
+[speaker:Salli] What about Google Meet isn't meeting your needs?
+[speaker:Russell] I like the pun. Sometimes, it doesn't feel like I'm connecting with my coworkers when I'm using video chatting software.
+[speaker:Salli] Oh, we completely understand that feeling! I see you've created an avatar already. What's it like interacting with me here?
+[speaker:Russell] It feels...pretty natural. And that brings me to what I need your help with. I need to deploy this software to all 50,000 people at my company.
+[speaker:Salli] 50,000?! Hang on, let me put on my Gold Star Support hat.
+
+
+[speaker:Emma] Hey Aditi! Since we're standing right next to this portal anyway, would you like to head over to Daybreak Island with me?
+[speaker:Aditi] Oh, joy! That just sounds dandy. Let's do it!
+[speaker:Emma] Aditi...have you ever noticed that we don't have legs?
+[speaker:Aditi] Well, sure we do! My legs are right here...hang on a second...where are my legs?
+[speaker:Emma] I told you! We don't have them.
+[speaker:Aditi] It's so easy to forget...well, how are we going to get into this portal, then?
+[speaker:Emma] I think it's a lost cause, to be honest.
+[speaker:Aditi] So we're not going to go to Daybreak Island together?
+[speaker:Emma] ...I guess not. Sorry to get your hopes up.
+[speaker:Aditi] It's OK. When we get legs, we'll go together.
+
+
+[speaker:Nicole] Surf's up, dude!
+[speaker:Russell] Far out! Hang ten, dude!
+[speaker:Nicole] You wanna head out there?
+[speaker:Russell] Haha, no, not at all! Look at those waves!
+[speaker:Nicole] What waves?
+[speaker:Russell] Exactly!
+[speaker:Nicole] Haha, I get it! Let's just stand by our boards here and dance!
+[speaker:Russell] I like the way you think. Look at me! I'm dancing! Are my colors changing?
+[speaker:Nicole] No, sorry, your color is staying the same. I do like those moves, though. Where did you learn them?
+[speaker:Russell] A shark taught me!
+[speaker:Nicole] A shark?
+[speaker:Russell] Yeah! While I was surfing last week, a shark taught me some dance moves!
+[speaker:Nicole] Far out!
