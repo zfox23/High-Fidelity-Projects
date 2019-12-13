@@ -1,0 +1,22 @@
+Emma
+<prosody pitch='high'>Oh man, club waterfall is my favorite club!</prosody>
+Ivy
+<prosody pitch='high'>OMG! Me too! This place always has great music playing. Raveena, what do you think?</prosody>
+Raveena
+<prosody pitch='high'>I love this place, but I don't like this song very much.</prosody>
+Kendra
+<prosody pitch='high'>Haha, yeah, you've never enjoyed Oliver Lieb remixes.</prosody>
+Raveena
+<prosody pitch='high'>Yeah...something about him just rubs me the wrong way.</prosody>
+Ivy
+<prosody pitch='high'>Is it because of that one EDC experience?</prosody>
+Emma
+<prosody pitch='high'>OMG, is that when Raveena tried to get up on the main stage during Oliver Lieb?</prosody>
+Raveena
+<prosody pitch='high'>Oh yeah...I forgot about that.</prosody>
+Kendra
+<prosody pitch='high'>That was amazing. Oliver even danced with you for a minute before security pulled you off.</prosody>
+Raveena
+<prosody pitch='high'>I only got up there because I was so bored during his set that I couldn't think of anything else to do.</prosody>
+Emma
+<prosody pitch='high'>Raveena, you are so dramatic!</prosody>

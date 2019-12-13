@@ -68,3 +68,43 @@ Raveena
 [speaker:Nicole] A shark?
 [speaker:Russell] Yeah! While I was surfing last week, a shark taught me some dance moves!
 [speaker:Nicole] Far out!
+
+
+[speaker:Geraint] Hey Amy, have you been to the Waterfall Club yet?
+[speaker:Amy] No, I've never even heard of it. Where is it?
+[speaker:Geraint] It's right across this pond from us. See it over there?
+[speaker:Amy] Oh yeah, so it is. Yes, I see it. What kind of music do they play?
+[speaker:Geraint] Electronic music, mostly. It's not my kind of thing, so I don't like it very much. But I think you would!
+[speaker:Amy] You are probably right, I think I would like it. Do you know anyone who I can go with my first time?
+[speaker:Geraint] Well, I would go with you for your first time. Maybe I'd even end up liking it.
+[speaker:Amy] Excellent! Thank you for offering. Do you want to go over there now?
+[speaker:Geraint] Sure! Let's go! ...oh, I forgot that we don't have legs.
+[speaker:Amy] Oh, right. Maybe next time.
+
+---
+The above scripts were generated using https://ttsmp3.com , but I had to stop using them because I exceeded my quota. The scripts below were generated using Amazon Polly directly, thru the AWS Polly CLI. See here for more info:
+https://docs.aws.amazon.com/polly/latest/dg/get-started-cli-exercise.html
+https://us-east-2.console.aws.amazon.com/polly/home/SynthesizeSpeech
+---
+
+$counter = 1
+aws polly synthesize-speech --text-type ssml --output-format mp3 --voice-id Geraint --text "<speak><p><prosody pitch='high'>This is my favorite song! Have you heard this before?</prosody></p></speak>" temp$counter.mp3
+$counter++
+aws polly synthesize-speech --text-type ssml --output-format mp3 --voice-id Amy --text "<speak><p><prosody pitch='high'>What? Can't hear you!</prosody></p></speak>" temp$counter.mp3
+$counter++
+aws polly synthesize-speech --text-type ssml --output-format mp3 --voice-id Geraint --text "<speak><p><prosody pitch='high'>I said, have you heard this before?</prosody></p></speak>" temp$counter.mp3
+$counter++
+aws polly synthesize-speech --text-type ssml --output-format mp3 --voice-id Amy --text "<speak><p><prosody pitch='high'>Oh, yes! I have! I answered this last time you asked!</prosody></p></speak>" temp$counter.mp3
+$counter++
+aws polly synthesize-speech --text-type ssml --output-format mp3 --voice-id Geraint --text "<speak><p><prosody pitch='high'>I love it!</prosody></p></speak>" temp$counter.mp3
+$counter++
+aws polly synthesize-speech --text-type ssml --output-format mp3 --voice-id Amy --text "<speak><p><prosody pitch='high'>It's pretty good!</prosody></p></speak>" temp$counter.mp3
+$timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+$command = "copy /b temp*.mp3 $timestamp.mp3"
+cmd /c $command
+del temp*.mp3
+
+---
+I figured that the above method was quite slow, so I wrote a Python script to do the above automatically, essentially making https://ttsmp3.com obsolete for my purposes :)
+See the other text files in this directory for each script.
+---

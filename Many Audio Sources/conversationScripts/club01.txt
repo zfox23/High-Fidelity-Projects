@@ -1,0 +1,12 @@
+Geraint
+<prosody pitch='high'>This is my favorite song! Have you heard this before?</prosody>
+Amy
+<prosody pitch='high'>What? Can't hear you!</prosody>
+Geraint
+<prosody pitch='high'>I said, have you heard this before?</prosody>
+Amy
+<prosody pitch='high'>Oh, yes! I have! I answered this last time you asked!</prosody>
+Geraint
+<prosody pitch='high'>I love it!</prosody>
+Amy
+<prosody pitch='high'>It's pretty good!</prosody>

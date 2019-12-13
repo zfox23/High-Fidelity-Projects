@@ -1,0 +1,16 @@
+Brian
+<prosody pitch='high'>Excuse me? Bartender?</prosody>
+Matthew
+<prosody pitch='high'>Hang on just a moment...OK, what's up?</prosody>
+Brian
+<prosody pitch='high'>Hi, yes, can I please get a drink?</prosody>
+Matthew
+<prosody pitch='high'>What kind of drink would you like?</prosody>
+Brian
+<prosody pitch='high'>Hmm...any kind of drink, as long as it's blue. I really like blue drinks.</prosody>
+Matthew
+<prosody pitch='high'>Blue drinks? I understand. I really like green drinks. OK, one blue drink coming right up!</prosody>
+Brian
+<prosody pitch='high'>Thank you!</prosody>
+Matthew
+<prosody pitch='high'>You're welcome! Now give me a tip.</prosody>

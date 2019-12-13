@@ -1,0 +1,109 @@
+[
+    {
+        "id": "{13f56595-5a58-49f7-ac94-54896cd390dd}",
+        "name": "Sound Emitter Misc",
+        "type": "Text",
+        "lastEdited": 1576263450180268,
+        "dimensions": {
+            "x": 1.7105218172073364,
+            "y": 1,
+            "z": 0.009999999776482582
+        },
+        "rotation": {
+            "x": -0.0000762939453125,
+            "y": -0.7214007377624512,
+            "z": -0.0000152587890625,
+            "w": 0.6925307512283325
+        },
+        "position": {"x":156.2635,"y":-97.1119,"z":-375.6005},
+        "created": 1576263267668533,
+        "lastEditedBy": "{f9c717bb-cef8-4820-be41-a7984d661d19}",
+        "queryAACube": {
+            "x": -0.9907048940658569,
+            "y": -0.9907048940658569,
+            "z": -0.9907048940658569,
+            "scale": 1.9814097881317139
+        },
+        "grab": {
+            "grabbable": false,
+            "equippableLeftRotation": {
+                "x": -0.0000152587890625,
+                "y": -0.0000152587890625,
+                "z": -0.0000152587890625,
+                "w": 1
+            },
+            "equippableRightRotation": {
+                "x": -0.0000152587890625,
+                "y": -0.0000152587890625,
+                "z": -0.0000152587890625,
+                "w": 1
+            }
+        },
+        "damping": 0,
+        "angularDamping": 0,
+        "collisionless": true,
+        "ignoreForCollisions": true,
+        "text": "BARBER SHOP",
+        "lineHeight": 0.5,
+        "unlit": true,
+        "clientOnly": false,
+        "avatarEntity": false,
+        "localEntity": false,
+        "faceCamera": false,
+        "isFacingAvatar": false
+    },
+    {
+        "id": "{f8ee07bb-fca7-4c94-98de-083ed1a814e8}",
+        "name": "Sound Emitter Misc",
+        "type": "Text",
+        "lastEdited": 1576263450180388,
+        "position": {"x":160.4422,"y":-96.9748,"z":-373.3123},
+        "dimensions": {
+            "x": 1.741935133934021,
+            "y": 1.6100605726242065,
+            "z": 0.009999999776482582
+        },
+        "rotation": {
+            "x": -0.0000762939453125,
+            "y": -0.7238117456436157,
+            "z": -0.0000152587890625,
+            "w": 0.689997673034668
+        },
+        "created": 1576263349664191,
+        "lastEditedBy": "{f9c717bb-cef8-4820-be41-a7984d661d19}",
+        "queryAACube": {
+            "x": 2.869520664215088,
+            "y": -0.7191025018692017,
+            "z": 1.1857589483261108,
+            "scale": 2.3720734119415283
+        },
+        "grab": {
+            "grabbable": false,
+            "equippableLeftRotation": {
+                "x": -0.0000152587890625,
+                "y": -0.0000152587890625,
+                "z": -0.0000152587890625,
+                "w": 1
+            },
+            "equippableRightRotation": {
+                "x": -0.0000152587890625,
+                "y": -0.0000152587890625,
+                "z": -0.0000152587890625,
+                "w": 1
+            }
+        },
+        "damping": 0,
+        "angularDamping": 0,
+        "collisionless": true,
+        "ignoreForCollisions": true,
+        "text": "SIT HERE vvv",
+        "lineHeight": 0.5,
+        "backgroundAlpha": 0.20000000298023224,
+        "unlit": true,
+        "clientOnly": false,
+        "avatarEntity": false,
+        "localEntity": false,
+        "faceCamera": false,
+        "isFacingAvatar": false
+    }
+]
